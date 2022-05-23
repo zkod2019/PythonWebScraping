@@ -20,15 +20,27 @@ def google():
             print(link)
             print(link.attrs['href'])
 
-def another():
+def bbcNews():
+    result = requests.get("https://www.bbc.com/news/science-environment-56837908")
+    src = result.content
+    soup = BeautifulSoup(src, 'lxml') 
+    urls = []
+
+    for divtag in soup.find_all("div"):
+        atag = divtag.find('a')
+        urls.append(atag.attrs['href'])
+
+    print(urls)
     
 
 if __name__ == "__main__":
     option = input("Website you want to scrape:"\
     "\n1. Google"\
-    "\n2. Another")
+    "\n2. BBC News\n")
 
     print("Option is:" + option)
     if (option == "1"):
         google()
+    if (option == "2"):
+        bbcNews()
     
